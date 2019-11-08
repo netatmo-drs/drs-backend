@@ -160,6 +160,12 @@ def get_new_nfc_code():
 
     return jsonify(new_nfcs)
 
+@app.route('/remove_new_nfc_code', methods=['GET'])
+def remove_new_nfc_code():
+    db.newnfcs.remove({})
+
+    return jsonify({'state': 'ok'})
+
 @app.route('/', methods=['GET'])
 def front_page():
     _devices = db.devices.find()
