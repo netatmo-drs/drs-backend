@@ -53,3 +53,8 @@
         <input type="text" name="place">
         <input type="submit">
     </form>
+
+    <h1>Nettoyer les codes NFC en attente </h1>
+    <form action="{{ url_for('remove_new_nfc_code') }}" method="post">
+        <input type="submit" value="supprimer">
+    </form>

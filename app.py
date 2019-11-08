@@ -160,7 +160,7 @@ def get_new_nfc_code():
 
     return jsonify(new_nfcs)
 
-@app.route('/remove_new_nfc_code', methods=['GET'])
+@app.route('/remove_new_nfc_code', methods=['POST'])
 def remove_new_nfc_code():
     db.newnfcs.remove({})
 
