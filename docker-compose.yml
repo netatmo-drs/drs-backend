@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  web:
+    build: .
+    command: python -u app.py
+    volumes:
+      - .:/app
+    network_mode: host
+  db:
+    image: mongo:3.0.2
+    network_mode: host

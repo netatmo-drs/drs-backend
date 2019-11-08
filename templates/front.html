@@ -1,0 +1,55 @@
+<h1>Devices</h1>
+{% for device in devices %}
+<h3> {{ device.name }} </h3>
+<p> Device {{ device.os_version }} est {% if device.state %} emprunté par {{ persons[device.state.person].name }} ({{ persons[device.state.person].place }}) depuis le {{ device.state.ts_borrow|dt}} {% else %} libre {% endif %}.
+    <form action="{{ url_for('delete_device') }}" method="post">
+        <input type="hidden" name="device_id" value="{{ device._id }}">
+        <input type="submit" value="supprimer">
+    </form>
+<p>
+{% endfor %}
+
+<h1>Persons</h1>
+{% for _id, person in persons.items() %}
+<h3> {{ person.name }} </h3>
+<p> {{person.id}} ({{person.place}}) a les codes nfc : {{ person.codes_nfc|join(',') }} 
+    <form action="{{ url_for('delete_person') }}" method="post">
+        <input type="hidden" name="person_id" value="{{ person._id }}">
+        <input type="submit" value="supprimer">
+    </form>
+<p>
+ {% endfor %}
+
+    <h1>Créer un device</h1>
+    <form action="{{ url_for('create_device') }}" method="post">
+        <label for="code_nfc">Code NFC:</label>
+        <select name="code_nfc" id="code_nfc_select">
+            {% for new_nfc in new_nfcs %}
+            <option value="{{new_nfc._id}}">{{ new_nfc._id }} (vu le {{new_nfc.ts|dt}})</option>
+            {% endfor %}
+        </select>
+        <label for="name">Nom :</label>
+        <input type="text" name="name">
+        <label for="os_version">Version d'OS :</label>
+        <input type="text" name="os_version">
+        <label for="tags">Tags (optionnel) :</label>
+        <input type="text" name="tags">
+        <input type="submit">
+    </form>
+
+    <h1>Créer une personne </h1>
+    <form action="{{ url_for('enlist_person') }}" method="post">
+        <label for="code_nfc">Code NFC:</label>
+        <select name="code_nfc" id="code_nfc_select">
+            {% for new_nfc in new_nfcs %}
+            <option value="{{new_nfc._id}}">{{ new_nfc._id }} (vu le {{new_nfc.ts|dt}})</option>
+            {% endfor %}
+        </select>
+        <label for="name">Nom :</label>
+        <input type="text" name="name">
+        <label for="id">Id :</label>
+        <input type="text" name="id">
+        <label for="place">Position :</label>
+        <input type="text" name="place">
+        <input type="submit">
+    </form>
