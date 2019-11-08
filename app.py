@@ -1,19 +1,16 @@
 import os
 from flask import Flask, redirect, url_for, request, jsonify, render_template
-from flask_socketio import SocketIO
 from pymongo import MongoClient
 import sys
 import uuid
 from datetime import datetime
 
 app = Flask(__name__)
-socketio = SocketIO(app)
 client = MongoClient('127.0.0.1', 27017)
 db = client.nrs
 
 @app.route('/list_devices')
 def list_devices():
-    socketio.emit('echo', {'echo': 'server here'}, broadcast=True)
     _items = db.devices.find()
     items = []
     for item in _items:
